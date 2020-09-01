@@ -1,4 +1,5 @@
 // 문제 출처 https://leetcode.com/problems/add-two-numbers/
+// 난이도: **
 
 // < Add Two Numbers >
 // 문제 요약: 2개의 정수가 linked list로 표현되어 있을 때 둘의 합을 linked list로 리턴
