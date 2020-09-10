@@ -6,7 +6,7 @@
 // 주의점
 // 1) O(N^2) 보다 빠른 풀이를 찾아내는 것이 관건.
 // 2) prefix_sum(0부터 i번째 인덱스까지의 합)을 구하면 모든 부분수열의 합을 나타낼 수 있다.
-// 3) 각 prefix_sum이 나온 개수를 저장하고 참조할때는 배열을 써도 되고 unordered_map을 써도 된다. 다만 unordered_map 구축 시간도 걸림을 고려해야한다.
+// 3) 각 prefix_sum이 나온 개수를 저장하고 참조할때는 배열을 써도 되고 unordered_map을 써도 된다. 다만 unordered_map 참조 시간도 걸림을 고려해야한다.
 // 4) prefix_sum이 음수가 될 수 있기 때문에 offset을 더해줘야한다.
 // 5) 처음에 prefix_sum이 0으로 시작하는 것을 넣어줘야한다! 
 // 참고 영상: https://www.youtube.com/watch?v=Lyay4WJwXyI 
