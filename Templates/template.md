@@ -293,6 +293,13 @@ struct Trie {
     return (!pNode && pNode->fin);
 	}
 };
+
+  int main(){
+    Trie* root = new Trie();
+    for (int i = 0; i<N; i++){
+      root->Insert(words[i]);
+    }
+  }
 ``` 
 
 <br/>
