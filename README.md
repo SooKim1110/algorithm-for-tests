@@ -159,6 +159,58 @@ void backtracking(int len) {
 	}
 }
 ```
+```
+#N-queen 크기가 N인 일차원 배열, 각 열에 몇번째 행에 퀸이 있는지를 저장 
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cstdlib>
+#include <queue>
+using namespace std;
+typedef long long ll;
+
+int n;
+int ans = 0;
+int board[16];
+
+
+void dfs(int row){
+  if (row == n+1){
+    ans++;
+    return;
+  }
+  
+  for (int i = 1; i<=n; i++){
+    bool possible = true;
+    // 지금까지 놓았던 퀸 위치 확인
+    for (int j = 1; j< row; j++){
+      if (board[j] == i || abs(i - board[j]) == row - j){
+        possible = false;
+        break;
+      }
+    }
+    if (possible){
+      board[row] = i;
+      dfs(row+1);
+    }
+  }
+}
+
+int main()
+{
+  ios::sync_with_stdio(0);
+  cin.tie(0);
+
+  cin >> n;
+
+  for (int i = 1; i<=n; i++){
+    board[1] = i;
+    dfs(2);
+  }  
+  cout << ans;
+}
+```
+
 ## 다이나믹 프로그래밍 (DP)
 ``` cpp
 // 예시
@@ -431,6 +483,7 @@ struct UnionFind
     int v = find(b);
     if (u == v) return;
 
+    // v의 트리 높이가 더 높도록
     if (rank[u] > rank[v])
     {
       swap(u,v);
@@ -503,6 +556,7 @@ struct UnionFind{
 
     if (u == v) return;
 
+    // v의 트리 높이가 더 높도록
     if (rank[u] > rank[v]) swap(u,v);
     parent[u] = v;
     if (rank[u] == rank[v]){
@@ -550,6 +604,7 @@ int main()
 ## 위상 정렬
 - 비순환 방향 그래프에서 그래프의 방향성을 거스르지 않고 정점 나열
 - DFS 역순을 구하거나 자신에게 들어오는 간선의 개수(indegree)를 활용
+- 모든 원소 방문하기 전 큐가 비면 사이클이 존재하는 것 (dfs사용할 때는 finish 배열 만들어서 끝나면 저장. visited되었는데 finish 아니면 사이클)
 ``` cpp
 queue<int> que;
 int degree[32001];
@@ -585,6 +640,19 @@ int main()
       if (degree[x] == 0) que.push(x);
     }
   }
+}
+```
+```  
+void dfs(int here) {
+    visited[here] = true;
+    for (auto there : vt[here]) {
+        if (!visited[there])
+            dfs(there);
+        else if (!finish[there])
+            cycle = 1;
+    }
+    finish[here] = true;
+    st.push(here);
 }
 ``` 
 
@@ -859,4 +927,149 @@ int main()
     cout << '\n';
   }
 }
-``` 
+```
+## Python 문자열 다루기
+str.isalnum() - 문자나 숫자인지 검사
+str.isalpha()
+str.isdigit()
+str.islower()
+str.isupper()
+
+str.lower()
+str.upper()
+
+str.find() - substring이 처음 등장하는 위치의 인덱스를 리턴, 없으면 -1 리턴 
+str.count() - 해당 문자열이 나온 개수 리턴 
+
+str.strip() - 전달된 문자를 str 왼쪽, 오른쪽에서 제거 (인자 없으면 공백 제거)
+str.lstrip()
+str.rstrip()
+
+str.split('.')
+
+str.replace(‘old’, ‘new’, 2)
+
+문자열 슬라이싱
+str[-1] - 마지막 문자
+str[::2] - 2개씩 step
+str[::-1] - reverse
+
+리스트를 문자열로 결합
+" ".join(list) - 리스트 사이 공백 삽입 
+
+chr(97) - a
+ord('a;) - 97
+
+Regex
+re.match('[a-z]', str) - 문자열 처음부터 매치 확인
+re.search() - 문자열 전체 검색
+re.findall() - 모든 문자열 list로 리턴
+re.sub('[a-z]', '', str) 
+
+
+
+## 기타
+int 범위: –2,147,483,648 ~ 2,147,483,647
+float 범위: 3.4E-38(-3.4*10^38) ~ 3.4E+38(3.4*10^38 (7digits)
+double 범위: 1.79E-308(-1.79*10^308) ~ 1.79E+308(1.79*10^308) (15digits)
+
+ios_base::sync_with_stdio(false);
+cin.tie(null);
+c << '\n;
+
+compare 함수
+
+eg.
+sort
+
+```
+bool compare(Student a, Student b) {
+    return a.score < b.score;
+}
+
+int main(void) {
+  sort(students, students + 5, compare);
+}
+```
+priority queue
+```
+struct compare{
+	bool operator()(pair<int, int>a, pair<int, int>b){
+		return a.second>b.second;
+	}
+};
+
+int main(){
+	priority_queue<pair<int, int>, vector<pair<int, int>>, compare>pq;
+	pq.push({1, 10});
+	pq.push({2, 3});
+	pq.push({3, 1});
+	cout<<pq.top().first; // 출력 : 3
+	cout<<pq.top().second; // 출력 : 1
+}
+```
+
+map
+[] => find, 없으면 add
+insert => 이미 존재하면 추가하지 않음
+
+```
+#include<iostream>
+#include<map>
+#include<string>
+using namespace std;
+ 
+int main(void){
+    
+    map<int, string> m;
+    
+    m.insert(pair<int, string>(1, "hello"));
+    m.insert(pair<int, string>(3, "world"));
+    
+    map<int, string>::iterator iter;
+    
+    //접근
+    for(iter = m.begin(); iter != m.end(); iter++){
+        cout << iter->first << ", " << iter->second << " " ;
+    }
+    cout << endl;
+    return 0;   
+}
+```
+
+stl 
+lower_bound()
+vector<int>::iterator iter = lower_bound(v.begin(), v.end(), 22)
+upper_bound()
+next_permutation()
+```
+	do{
+		for(int i=0; i<4; i++){
+			cout << v[i] << " ";
+		}
+		cout << '\n';
+	}while(next_permutation(v.begin(),v.end()));
+```
+
+재귀함수 부분집합 구하기
+```
+vector<int> subset;
+int n = 4;
+void search(int k){
+  if (k == n+1){
+    for (int i = 0; i<subset.size(); i++){
+      cout << subset[i];
+    }
+  else{
+    subset.push_back(k);
+    search(k+1);
+    subset.pop_back();
+    search(k+1);
+  }  
+}
+
+int main(){
+  search(1);
+}
+
+```
