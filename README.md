@@ -431,7 +431,7 @@ int main(){
 
 # 4) 조합론 
 ## 조합 (Combination)
-- 파스칼 삼각형 성질 이용하여 계산
+- 파스칼 삼각형 성질 이용하여 조합 경우의 수 계산
 ``` cpp
 #define MAX    	1001
 #define DIV			10007
@@ -449,6 +449,69 @@ int main() {
 }
 
 ``` 
+## 순열, 조합 구현 
+순열 (순서 따지고, 중복 허용 안함)
+- check 배열로 사용한 숫자인지 확인 
+``` cpp
+int K,N;
+bool check[100];
+vector<int> chosen;
+
+void permutation(int cnt){
+    if (cnt == K) {
+        for (int x: chosen) cout << x << " ";
+        cout << endl;
+        return;
+    }
+    
+    //이번 인덱스 선택함
+    for (int i = 1; i<=N; i++){
+        if (!check[i]){
+            check[i] = 1;
+            chosen.push_back(i);
+            permutation(cnt+1);
+            chosen.pop_back();
+            check[i] = 0;
+        }
+    }
+    
+}
+
+int main(){
+    N = 4;
+    K = 3;
+    permutation(0);
+}
+```
+
+조합 (순서 따지지 않고, 중복 허용 안함)
+- 반복문 시작 값이 이전에 선택한 값 +1 부터 
+``` cpp
+int K,N;
+vector<int> chosen;
+
+void combination(int idx, int cnt){
+    if (cnt == K) {
+        for (int x: chosen) cout << x << " ";
+        cout << endl;
+        return;
+    }
+    
+    for (int i = idx; i<=N; i++){
+        chosen.push_back(i);
+        combination(i+1,cnt+1);
+        chosen.pop_back();
+    }
+    
+}
+
+int main(){
+    N = 4;
+    K = 3;
+    combination(1,0);
+}
+```
+
 
 <br/>
 
